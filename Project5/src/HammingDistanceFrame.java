@@ -124,7 +124,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(scroller, leftSideConst);
 		
-		//label for bombo box to select station to compare to
+		//label for combo box to select station to compare to
 		JLabel compareWith = new JLabel("Compare with:");
 		compareWith.setVisible(true);
 		leftSideConst = new GridBagConstraints();
@@ -143,6 +143,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//leftSideConst.insets = new Insets(10, 10, 10, 10);
 		leftSide.add(allStations, leftSideConst);
 		
+		//button to calculate the hamming distances of the selected station
 		JButton calcHD = new JButton("Calculate HD");
 		calcHD.setSize(new Dimension(20, 50));
 		leftSideConst = new GridBagConstraints();
@@ -151,13 +152,67 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(calcHD, leftSideConst);
 		
-		
-		JPanel distances = new JPanel(new GridLayout(6, 2));
+		/**
+		 * Panel to hold the labels and text fields showing the number of stations with the 
+		 * corresponding hamming distance to the selected station
+		 */
+		JPanel distances = new JPanel(new GridLayout(6, 2, 30, 10));
 		distances.setVisible(true);
-		leftSide.add(distances);
+		leftSideConst = new GridBagConstraints();
+		leftSideConst.gridx = 0;
+		leftSideConst.gridy = 7;
+		leftSideConst.insets = new Insets(10, 10, 10, 10);
+		
+		/**
+		 * Labels and fields to display the numbers
+		 */
+		JLabel distance0 = new JLabel("Distance 0");
+
+		
+		JLabel distance1 = new JLabel("Distance 1");
+		
+		JLabel distance2 = new JLabel("Distance 2");
+		
+		JLabel distance3 = new JLabel("Distance 3");
+		
+		JLabel distance4 = new JLabel("Distance 4");
+		
+		JTextField numDist0 = new JTextField();
+		hammDistInfo.setEditable(false);
+		hammDistInfo.setText(" ");
+		
+		JTextField numDist1 = new JTextField();
+		hammDistInfo.setEditable(false);
+		hammDistInfo.setText(" ");
+		
+		JTextField numDist2 = new JTextField();
+		hammDistInfo.setEditable(false);
+		hammDistInfo.setText(" ");
+		
+		JTextField numDist3 = new JTextField();
+		hammDistInfo.setEditable(false);
+		hammDistInfo.setText(" ");
+		
+		JTextField numDist4 = new JTextField();
+		hammDistInfo.setEditable(false);
+		hammDistInfo.setText(" ");
+		
+		distances.add(distance0);
+		distances.add(numDist0);
+		distances.add(distance1);
+		distances.add(numDist1);
+		distances.add(distance2);
+		distances.add(numDist2);
+		distances.add(distance3);
+		distances.add(numDist3);
+		distances.add(distance4);
+		distances.add(numDist4);
+
+		leftSide.add(distances, leftSideConst);
 		
 		//adds panel to frame
 		this.add(leftSide);
+
 		
 		//makes everything visible
 		this.setVisible(true);
