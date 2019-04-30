@@ -70,6 +70,10 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//declares new constraints for the panel
 		GridBagConstraints leftSideConst = null;
 		
+		/*===================================================================================
+		 * The following are components for the left side of the window,
+		 * where hamming distances are calculated according to the station the user selects
+		 ====================================================================================*/
 		//label for box to set hamming distance
 		JLabel hammDist = new JLabel();
 		hammDist.setText("Enter Hamming Distance:");
@@ -81,9 +85,8 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		leftSide.add(hammDist, leftSideConst);
 		
 		//text field for hamming distance
-		JTextField hammDistInfo = new JTextField();
+		JTextField hammDistInfo = new JTextField("2", 5);
 		hammDistInfo.setEditable(false);
-		hammDistInfo.setText("2");
 		hammDistInfo.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 1;
@@ -117,6 +120,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//text area to show stations with the selected hamming distance
 		JTextArea matchingStations = new JTextArea(15, 15);
 		JScrollPane scroller = new JScrollPane(matchingStations);
+		matchingStations.setEditable(false);
 		matchingStations.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
@@ -152,10 +156,10 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(calcHD, leftSideConst);
 		
-		/**
+		/*==================================================================================
 		 * Panel to hold the labels and text fields showing the number of stations with the 
 		 * corresponding hamming distance to the selected station
-		 */
+		 ===================================================================================*/
 		JPanel distances = new JPanel(new GridLayout(6, 2, 30, 10));
 		distances.setVisible(true);
 		leftSideConst = new GridBagConstraints();
@@ -168,7 +172,6 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 */
 		JLabel distance0 = new JLabel("Distance 0");
 
-		
 		JLabel distance1 = new JLabel("Distance 1");
 		
 		JLabel distance2 = new JLabel("Distance 2");
@@ -177,26 +180,22 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		
 		JLabel distance4 = new JLabel("Distance 4");
 		
-		JTextField numDist0 = new JTextField();
-		hammDistInfo.setEditable(false);
-		hammDistInfo.setText(" ");
-		
-		JTextField numDist1 = new JTextField();
-		hammDistInfo.setEditable(false);
-		hammDistInfo.setText(" ");
-		
-		JTextField numDist2 = new JTextField();
-		hammDistInfo.setEditable(false);
-		hammDistInfo.setText(" ");
-		
-		JTextField numDist3 = new JTextField();
-		hammDistInfo.setEditable(false);
-		hammDistInfo.setText(" ");
-		
-		JTextField numDist4 = new JTextField();
-		hammDistInfo.setEditable(false);
-		hammDistInfo.setText(" ");
-		
+		JTextField numDist0 = new JTextField(" ");
+		numDist0.setEditable(false);
+
+		JTextField numDist1 = new JTextField(" ");
+		numDist1.setEditable(false);
+
+		JTextField numDist2 = new JTextField(" ");
+		numDist2.setEditable(false);
+
+		JTextField numDist3 = new JTextField(" ");
+		numDist3.setEditable(false);
+
+		JTextField numDist4 = new JTextField(" ");
+		numDist4.setEditable(false);
+
+		//adds all the components to the panel in the correct order
 		distances.add(distance0);
 		distances.add(numDist0);
 		distances.add(distance1);
@@ -208,7 +207,30 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		distances.add(distance4);
 		distances.add(numDist4);
 
+		//adds the panel to the larger panel according to the constraints
 		leftSide.add(distances, leftSideConst);
+		
+		/**======================================
+		 * Back adding components to larger panel
+		=========================================*/
+		
+		//button to let the user add a station to the file/list
+		JButton addStation = new JButton("Add Station");
+		addStation.setSize(new Dimension(20, 50));
+		leftSideConst = new GridBagConstraints();
+		leftSideConst.gridx = 0;
+		leftSideConst.gridy = 8;
+		//leftSideConst.insets = new Insets(50, 50, 50, 50);
+		leftSide.add(addStation, leftSideConst);
+		
+		//text field where the user can type in a station to add
+		JTextField addStationField = new JTextField(" ", 5);
+		addStationField.setEditable(true);
+		leftSideConst = new GridBagConstraints();
+		leftSideConst.gridx = 1;
+		leftSideConst.gridy = 8;
+		//leftSideConst.insets = new Insets(50, 50, 50, 50);
+		leftSide.add(addStationField, leftSideConst);
 		
 		//adds panel to frame
 		this.add(leftSide);
