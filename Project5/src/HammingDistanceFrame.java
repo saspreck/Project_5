@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -22,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 /**
@@ -58,25 +60,41 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	JTextField numDist4;
 	JButton addStation;
 	JTextField addStationField;
-	
-	/**
-	 * Function used for refreshing the combo box contents. Populates the box with the stations.
+
+	/*
+	 * Method to set up the combo box
 	 */
-	private DefaultComboBoxModel<String> getComboBoxModel() throws IOException, FileNotFoundException
-	{
-		BufferedReader bf = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
+	private void comboBoxSetup() {
 		
-		ArrayList<String> stations = new ArrayList<String>();
-		while (bf.ready())
-		{
-			stations.add(bf.readLine());
+		try {
+			ArrayList<String> stations = readInFromFile();
+			for(String stn : stations) {
+				allStations.addItem(stn);
+			}
 		}
-		String[] comboBoxModel = stations.toArray(new String[stations.size()]);
-		bf.close();
-	    return new DefaultComboBoxModel<>(comboBoxModel);
+		catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
+	
+	/*
+	 * Method that reads in all stations from the file and stores them in an arrayList
+	 */
+	private ArrayList<String> readInFromFile() throws IOException, FileNotFoundException {
+			ArrayList<String> stations = new ArrayList<String>();
+			BufferedReader bf = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
+		
+			while (bf.ready())
+			{	
+				stations.add(bf.readLine());
+			}
+
+			return stations;
+	}
+
 	/**
-	 * Interactive panel that allows the user to 
+	 * Interactive panel that allows the user to calculate various things 
+	 * based on a selected station's hamming distance
 	 * @throws IOException 
 	 */
 	public HammingDistanceFrame() throws IOException {
@@ -173,8 +191,8 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		compareWith.setVisible(true);
 		
 		//Combo box to select which station to compare to
-		DefaultComboBoxModel<String> model = getComboBoxModel();
-		allStations = new JComboBox<String>(model);
+		allStations = new JComboBox<String>();
+		this.comboBoxSetup();
 		
 		//button to calculate the hamming distances of the selected station
 		calcHD = new JButton("Calculate HD");
@@ -187,11 +205,12 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		leftSide.add(comboPanel, leftSideConst);
 		
 		
+		
 		/*==================================================================================
 		 * Panel to hold the labels and text fields showing the number of stations with the 
 		 * corresponding hamming distance to the selected station
 		 ==================================================================================*/
-		distances = new JPanel(new GridLayout(6, 2, 30, 10));
+		distances = new JPanel(new GridLayout(6, 2, 10, 10));
 		distances.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
@@ -229,7 +248,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		addStation = new JButton("Add Station");
 		addStation.setSize(new Dimension(20, 50));
 		
-		addStationField = new JTextField(" ", 5);
+		addStationField = new JTextField("", 5);
 		addStationField.setEditable(true);
 
 		//adds all the components to the panel in the correct order
@@ -256,6 +275,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		
 		//makes everything visible
 		this.setVisible(true);
+		
 		
 		/**==================================================================================================
 		 * The following are action and change listeners for the buttons and combo box in the window
@@ -311,6 +331,28 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 			numDist4.setText(String.valueOf(distances[4]));
 			
 		});
+		/*
+		addStation.addActionListener((e) ->{
+			String newStation = addStationField.getText();
+			if(newStation.length() == 4) {
+				stationsList.add(addStationField.getText());
+			}
+			Collections.sort(stationsList);
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
+				for(int i = 0; i < stationsList.size(); i++) {
+					bw.write(stationsList.get(i) + "\n");
+				}
+				DefaultComboBoxModel<String> newModel = getComboBoxModel();
+				allStations = new JComboBox<String>(newModel);
+				bw.close();
+
+			}
+			catch (IOException ioE){
+				System.out.println("Error writing to file");
+			}
+				
+		});*/
 		
 	}
 	
