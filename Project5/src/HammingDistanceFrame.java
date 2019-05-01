@@ -73,27 +73,37 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		/*===================================================================================
 		 * The following are components for the left side of the window,
 		 * where hamming distances are calculated according to the station the user selects
-		 ====================================================================================*/
+		 ===================================================================================*/
+		
+		/*===================================================================================
+		 * Panel to hold the label and text field for the 
+		 * hamming distance selected on the slider
+		 ===================================================================================*/
+		JPanel sliderPanel = new JPanel(new GridLayout(1, 2));
+		sliderPanel.setVisible(true);
+		leftSideConst = new GridBagConstraints();
+		leftSideConst.gridx = 0;
+		leftSideConst.gridy = 0;
+		leftSideConst.insets = new Insets(10, 10, 10, 10);
 		
 		//label for box to set hamming distance
 		JLabel hammDist = new JLabel();
 		hammDist.setText("Enter Hamming Distance:");
 		hammDist.setVisible(true);
-		leftSideConst = new GridBagConstraints();
-		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 0;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(hammDist, leftSideConst);
 		
 		//text field for hamming distance
-		JTextField hammDistInfo = new JTextField("2", 5);
+		JTextField hammDistInfo = new JTextField("2", 2);
 		hammDistInfo.setEditable(false);
 		hammDistInfo.setVisible(true);
-		leftSideConst = new GridBagConstraints();
+		/*leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 1;
 		leftSideConst.gridy = 0;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(hammDistInfo, leftSideConst);
+		leftSide.add(hammDistInfo, leftSideConst);*/
+		
+		sliderPanel.add(hammDist);
+		sliderPanel.add(hammDistInfo);
+		leftSide.add(sliderPanel, leftSideConst);
 		
 		//slider to select the hamming distance to compare
 		JSlider compDist = new JSlider(0, 4);
@@ -108,6 +118,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		leftSideConst.gridy = 1;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(compDist, leftSideConst);
+		
 		
 		//button to shows stations at the selected hamming distance
 		JButton showStation = new JButton("Show Station");
@@ -129,38 +140,40 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(scroller, leftSideConst);
 		
-		//label for combo box to select station to compare to
-		JLabel compareWith = new JLabel("Compare with:");
-		compareWith.setVisible(true);
+		
+		/*======================================================================
+		 * Panel to hold combo box, label, and button
+		 ======================================================================*/
+		JPanel comboPanel = new JPanel(new GridLayout(2, 2, 30, 10));
+		comboPanel.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
 		leftSideConst.gridy = 4;
 		leftSideConst.insets = new Insets(10, 10, 10, 10);
-		leftSide.add(compareWith, leftSideConst);
+		
+		//label for combo box to select station to compare to
+		JLabel compareWith = new JLabel("Compare with:");
+		compareWith.setVisible(true);
 		
 		//Combo box to select which station to compare to
 		DefaultComboBoxModel<String> model = getComboBoxModel();
 		JComboBox<String> allStations = new JComboBox<String>(model);
-		allStations.setVisible(true);
-		leftSideConst = new GridBagConstraints();
-		leftSideConst.gridx = 1;
-		leftSideConst.gridy = 4;
-		//leftSideConst.insets = new Insets(10, 10, 10, 10);
-		leftSide.add(allStations, leftSideConst);
 		
 		//button to calculate the hamming distances of the selected station
 		JButton calcHD = new JButton("Calculate HD");
 		calcHD.setSize(new Dimension(20, 50));
-		leftSideConst = new GridBagConstraints();
-		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 5;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(calcHD, leftSideConst);
+		
+		comboPanel.add(compareWith);
+		comboPanel.add(allStations);
+		comboPanel.add(calcHD);
+		
+		leftSide.add(comboPanel, leftSideConst);
+		
 		
 		/*==================================================================================
 		 * Panel to hold the labels and text fields showing the number of stations with the 
 		 * corresponding hamming distance to the selected station
-		 ===================================================================================*/
+		 ==================================================================================*/
 		JPanel distances = new JPanel(new GridLayout(6, 2, 30, 10));
 		distances.setVisible(true);
 		leftSideConst = new GridBagConstraints();
@@ -219,25 +232,6 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//adds the panel to the larger panel according to the constraints
 		leftSide.add(distances, leftSideConst);
 		
-		/**======================================
-		 * Back adding components to larger panel
-		=========================================*/
-		
-		//button to let the user add a station to the file/list
-		
-		/*leftSideConst = new GridBagConstraints();
-		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 8;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(addStation, leftSideConst);*/
-		
-		//text field where the user can type in a station to add
-		
-		/*leftSideConst = new GridBagConstraints();
-		leftSideConst.gridx = 1;
-		leftSideConst.gridy = 8;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(addStationField, leftSideConst);*/
 		
 		//adds panel to frame
 		this.add(leftSide);
@@ -249,6 +243,8 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		/**==================================================================================================
 		 * The following are action and change listeners for the buttons, slider, and combo box in the window
 		=====================================================================================================*/
+		
+		
 	}
 	
 	@Override
