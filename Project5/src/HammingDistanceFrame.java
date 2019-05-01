@@ -261,19 +261,54 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * The following are action and change listeners for the buttons and combo box in the window
 		=====================================================================================================*/
 		
+		/**
+		 * Action listener for the showstation button
+		 * Updates the text area to show all stations with a hamming distance equal to the slider's value
+		 */
 		showStation.addActionListener((e) -> {
+			
 			ArrayList<String> equalStations = new ArrayList<String>();
 			HammingDistanceCalculator station = new HammingDistanceCalculator((String) allStations.getSelectedItem(), compDist.getValue());
+			
+			//tries to run the method and catches an IOException if it is thrown
 			try {
 				equalStations = station.selectedDistanceStations();
 			}
 			catch (IOException ioE){
-				System.out.println("Error getting stations.");
+				System.out.println("Error executing method.");
 			}
+			//clears the text area
+			matchingStations.setText("");
+			//adds each station into the text area on a new line
 			for(String stn : equalStations) {
 				
 				matchingStations.append(stn + "\n");
 			}
+			
+		});
+		
+		/**
+		 * Action listener for the calcHD button
+		 * Updates each text field with the number of stations with the corresponding hamming distance
+		 */
+		calcHD.addActionListener((e) -> {
+			int[] distances = new int[5];
+			HammingDistanceCalculator station = new HammingDistanceCalculator((String) allStations.getSelectedItem(), compDist.getValue());
+			
+			//tries to run the method and catches an IOException if it is thrown
+			try {
+				distances = station.calcHammingDistance();
+			}
+			catch (IOException ioE) {
+				System.out.println("Error executing method.");
+			}
+			
+			//sets each text field to the appropriate value from the array
+			numDist0.setText(String.valueOf(distances[0]));
+			numDist1.setText(String.valueOf(distances[1]));
+			numDist2.setText(String.valueOf(distances[2]));
+			numDist3.setText(String.valueOf(distances[3]));
+			numDist4.setText(String.valueOf(distances[4]));
 			
 		});
 		

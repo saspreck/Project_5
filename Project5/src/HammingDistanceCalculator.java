@@ -68,7 +68,6 @@ public class HammingDistanceCalculator {
 				stationHammDist[4]++;
 			}
 			
-			return stationHammDist;
 
 		}
 		bf.close();
