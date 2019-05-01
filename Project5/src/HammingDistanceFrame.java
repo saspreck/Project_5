@@ -74,6 +74,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * The following are components for the left side of the window,
 		 * where hamming distances are calculated according to the station the user selects
 		 ====================================================================================*/
+		
 		//label for box to set hamming distance
 		JLabel hammDist = new JLabel();
 		hammDist.setText("Enter Hamming Distance:");
@@ -104,7 +105,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		compDist.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 2;
+		leftSideConst.gridy = 1;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(compDist, leftSideConst);
 		
@@ -113,18 +114,18 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		showStation.setSize(new Dimension(20, 50));
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 3;
+		leftSideConst.gridy = 2;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(showStation, leftSideConst);
 		
 		//text area to show stations with the selected hamming distance
-		JTextArea matchingStations = new JTextArea(15, 15);
+		JTextArea matchingStations = new JTextArea(10, 10);
 		JScrollPane scroller = new JScrollPane(matchingStations);
 		matchingStations.setEditable(false);
 		matchingStations.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 4;
+		leftSideConst.gridy = 3;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(scroller, leftSideConst);
 		
@@ -133,7 +134,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		compareWith.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 5;
+		leftSideConst.gridy = 4;
 		leftSideConst.insets = new Insets(10, 10, 10, 10);
 		leftSide.add(compareWith, leftSideConst);
 		
@@ -143,7 +144,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		allStations.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 1;
-		leftSideConst.gridy = 5;
+		leftSideConst.gridy = 4;
 		//leftSideConst.insets = new Insets(10, 10, 10, 10);
 		leftSide.add(allStations, leftSideConst);
 		
@@ -152,7 +153,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		calcHD.setSize(new Dimension(20, 50));
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 6;
+		leftSideConst.gridy = 5;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(calcHD, leftSideConst);
 		
@@ -164,7 +165,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		distances.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
-		leftSideConst.gridy = 7;
+		leftSideConst.gridy = 6;
 		leftSideConst.insets = new Insets(10, 10, 10, 10);
 		
 		/**
@@ -194,6 +195,12 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 
 		JTextField numDist4 = new JTextField(" ");
 		numDist4.setEditable(false);
+		
+		JButton addStation = new JButton("Add Station");
+		addStation.setSize(new Dimension(20, 50));
+		
+		JTextField addStationField = new JTextField(" ", 5);
+		addStationField.setEditable(true);
 
 		//adds all the components to the panel in the correct order
 		distances.add(distance0);
@@ -206,6 +213,8 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		distances.add(numDist3);
 		distances.add(distance4);
 		distances.add(numDist4);
+		distances.add(addStation);
+		distances.add(addStationField);
 
 		//adds the panel to the larger panel according to the constraints
 		leftSide.add(distances, leftSideConst);
@@ -215,22 +224,20 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		=========================================*/
 		
 		//button to let the user add a station to the file/list
-		JButton addStation = new JButton("Add Station");
-		addStation.setSize(new Dimension(20, 50));
-		leftSideConst = new GridBagConstraints();
+		
+		/*leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
 		leftSideConst.gridy = 8;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(addStation, leftSideConst);
+		leftSide.add(addStation, leftSideConst);*/
 		
 		//text field where the user can type in a station to add
-		JTextField addStationField = new JTextField(" ", 5);
-		addStationField.setEditable(true);
-		leftSideConst = new GridBagConstraints();
+		
+		/*leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 1;
 		leftSideConst.gridy = 8;
 		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(addStationField, leftSideConst);
+		leftSide.add(addStationField, leftSideConst);*/
 		
 		//adds panel to frame
 		this.add(leftSide);
@@ -239,13 +246,13 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		//makes everything visible
 		this.setVisible(true);
 		
-		
+		/**==================================================================================================
+		 * The following are action and change listeners for the buttons, slider, and combo box in the window
+		=====================================================================================================*/
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 	
 	@Override
 	public void mousePressed(MouseEvent e) {}
@@ -260,9 +267,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	public void mouseExited(MouseEvent e) {}
 	
 	@Override
-	public void stateChanged(ChangeEvent event) {
-		
-	}
+	public void stateChanged(ChangeEvent event) {}
 	
 	public static void main (String [] args) throws IOException {
 		new HammingDistanceFrame();
