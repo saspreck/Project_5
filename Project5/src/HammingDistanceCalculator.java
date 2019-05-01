@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 /**
  * Class to calculate appropriate hamming distances
  * @author skylersprecker
@@ -26,7 +27,7 @@ public class HammingDistanceCalculator {
 	
 	/**
 	 * Method to calculate the number of stations with respective hamming distances to the selected one
-	 * @return
+	 * @return stationHammDist
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
@@ -74,5 +75,37 @@ public class HammingDistanceCalculator {
 		return stationHammDist;
 
 	}
-
+	
+	/**
+	 * Method to collect all stations with a hamming distance equal to the selected distance
+	 * @return equalDistanceStations
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public ArrayList<String> selectedDistanceStations() throws FileNotFoundException, IOException {
+		
+		ArrayList<String> equalDistanceStations = new ArrayList<String>();
+		//buffered reader to read in from the file
+		BufferedReader bf = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
+				
+		//loops through the file reading in each line
+		while(bf.ready()) {
+			String currStation = bf.readLine();
+			int count = 0;
+			
+			//iterates through the string char by char to find differences
+			for (int i = 0; i < selectedStation.length(); i++) {
+				if(selectedStation.charAt(i) != currStation.charAt(i)) {
+					count++;
+				}
+			}
+			
+			if(count == selectedDistance) {
+				equalDistanceStations.add(currStation);
+			}
+		}
+		bf.close();
+		return equalDistanceStations;
+	}
+	
 }
