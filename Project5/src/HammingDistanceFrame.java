@@ -261,6 +261,21 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * The following are action and change listeners for the buttons and combo box in the window
 		=====================================================================================================*/
 		
+		showStation.addActionListener((e) -> {
+			ArrayList<String> equalStations = new ArrayList<String>();
+			HammingDistanceCalculator station = new HammingDistanceCalculator((String) allStations.getSelectedItem(), compDist.getValue());
+			try {
+				equalStations = station.selectedDistanceStations();
+			}
+			catch (IOException ioE){
+				System.out.println("Error getting stations.");
+			}
+			for(String stn : equalStations) {
+				
+				matchingStations.append(stn + "\n");
+			}
+			
+		});
 		
 	}
 	
