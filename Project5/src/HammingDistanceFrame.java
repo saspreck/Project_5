@@ -35,6 +35,30 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	private static final int FRAME_WIDTH = 700;
 	private static final int FRAME_HEIGHT = 700;
 	
+	//all components that go on the left side of the window
+	JPanel hammDistPanel;
+	JLabel hammDist;
+	JTextField hammDistInfo;
+	JSlider compDist;
+	JButton showStation;
+	JTextArea matchingStations;
+	JPanel comboPanel;
+	JLabel compareWith;
+	JComboBox<String> allStations;
+	JButton calcHD;
+	JPanel distances;
+	JLabel distance0;
+	JLabel distance1;
+	JLabel distance2;
+	JLabel distance3;
+	JLabel distance4;
+	JTextField numDist0;
+	JTextField numDist1;
+	JTextField numDist2;
+	JTextField numDist3;
+	JTextField numDist4;
+	JButton addStation;
+	JTextField addStationField;
 	
 	/**
 	 * Function used for refreshing the combo box contents. Populates the box with the stations.
@@ -79,72 +103,66 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * Panel to hold the label and text field for the 
 		 * hamming distance selected on the slider
 		 ===================================================================================*/
-		JPanel sliderPanel = new JPanel(new GridLayout(1, 2));
-		sliderPanel.setVisible(true);
+		hammDistPanel = new JPanel(new GridLayout(1, 2));
+		hammDistPanel.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
 		leftSideConst.gridy = 0;
 		leftSideConst.insets = new Insets(10, 10, 10, 10);
 		
 		//label for box to set hamming distance
-		JLabel hammDist = new JLabel();
+		hammDist = new JLabel();
 		hammDist.setText("Enter Hamming Distance:");
 		hammDist.setVisible(true);
 		
 		//text field for hamming distance
-		JTextField hammDistInfo = new JTextField("2", 2);
+		hammDistInfo = new JTextField("2", 2);
 		hammDistInfo.setEditable(false);
 		hammDistInfo.setVisible(true);
-		/*leftSideConst = new GridBagConstraints();
-		leftSideConst.gridx = 1;
-		leftSideConst.gridy = 0;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
-		leftSide.add(hammDistInfo, leftSideConst);*/
 		
-		sliderPanel.add(hammDist);
-		sliderPanel.add(hammDistInfo);
-		leftSide.add(sliderPanel, leftSideConst);
+		//adds components to panel and panel to frame
+		hammDistPanel.add(hammDist);
+		hammDistPanel.add(hammDistInfo);
+		leftSide.add(hammDistPanel, leftSideConst);
 		
 		//slider to select the hamming distance to compare
-		JSlider compDist = new JSlider(0, 4);
+		compDist = new JSlider(0, 4);
 		compDist.addChangeListener(this);
 		compDist.setMajorTickSpacing(1);
 		compDist.setPaintTicks(true);
 		compDist.setPaintLabels(true);
 		compDist.setSnapToTicks(true);
 		compDist.setVisible(true);
+		compDist.addChangeListener(this);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
 		leftSideConst.gridy = 1;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(compDist, leftSideConst);
 		
 		
 		//button to shows stations at the selected hamming distance
-		JButton showStation = new JButton("Show Station");
+		showStation = new JButton("Show Station");
 		showStation.setSize(new Dimension(20, 50));
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
 		leftSideConst.gridy = 2;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(showStation, leftSideConst);
 		
 		//text area to show stations with the selected hamming distance
-		JTextArea matchingStations = new JTextArea(10, 10);
+		matchingStations = new JTextArea(10, 10);
 		JScrollPane scroller = new JScrollPane(matchingStations);
 		matchingStations.setEditable(false);
 		matchingStations.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
 		leftSideConst.gridy = 3;
-		//leftSideConst.insets = new Insets(50, 50, 50, 50);
 		leftSide.add(scroller, leftSideConst);
 		
 		
 		/*======================================================================
 		 * Panel to hold combo box, label, and button
 		 ======================================================================*/
-		JPanel comboPanel = new JPanel(new GridLayout(2, 2, 30, 10));
+		comboPanel = new JPanel(new GridLayout(2, 2, 30, 10));
 		comboPanel.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
@@ -152,21 +170,21 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		leftSideConst.insets = new Insets(10, 10, 10, 10);
 		
 		//label for combo box to select station to compare to
-		JLabel compareWith = new JLabel("Compare with:");
+		compareWith = new JLabel("Compare with:");
 		compareWith.setVisible(true);
 		
 		//Combo box to select which station to compare to
 		DefaultComboBoxModel<String> model = getComboBoxModel();
-		JComboBox<String> allStations = new JComboBox<String>(model);
+		allStations = new JComboBox<String>(model);
 		
 		//button to calculate the hamming distances of the selected station
-		JButton calcHD = new JButton("Calculate HD");
+		calcHD = new JButton("Calculate HD");
 		calcHD.setSize(new Dimension(20, 50));
 		
+		//adds components to panel and panel to frame
 		comboPanel.add(compareWith);
 		comboPanel.add(allStations);
 		comboPanel.add(calcHD);
-		
 		leftSide.add(comboPanel, leftSideConst);
 		
 		
@@ -174,7 +192,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * Panel to hold the labels and text fields showing the number of stations with the 
 		 * corresponding hamming distance to the selected station
 		 ==================================================================================*/
-		JPanel distances = new JPanel(new GridLayout(6, 2, 30, 10));
+		distances = new JPanel(new GridLayout(6, 2, 30, 10));
 		distances.setVisible(true);
 		leftSideConst = new GridBagConstraints();
 		leftSideConst.gridx = 0;
@@ -184,35 +202,35 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		/**
 		 * Labels and fields to display the numbers
 		 */
-		JLabel distance0 = new JLabel("Distance 0");
+		distance0 = new JLabel("Distance 0");
 
-		JLabel distance1 = new JLabel("Distance 1");
+		distance1 = new JLabel("Distance 1");
 		
-		JLabel distance2 = new JLabel("Distance 2");
+		distance2 = new JLabel("Distance 2");
 		
-		JLabel distance3 = new JLabel("Distance 3");
+		distance3 = new JLabel("Distance 3");
 		
-		JLabel distance4 = new JLabel("Distance 4");
+		distance4 = new JLabel("Distance 4");
 		
-		JTextField numDist0 = new JTextField(" ");
+		numDist0 = new JTextField(" ");
 		numDist0.setEditable(false);
 
-		JTextField numDist1 = new JTextField(" ");
+		numDist1 = new JTextField(" ");
 		numDist1.setEditable(false);
 
-		JTextField numDist2 = new JTextField(" ");
+		numDist2 = new JTextField(" ");
 		numDist2.setEditable(false);
 
-		JTextField numDist3 = new JTextField(" ");
+		numDist3 = new JTextField(" ");
 		numDist3.setEditable(false);
 
-		JTextField numDist4 = new JTextField(" ");
+		numDist4 = new JTextField(" ");
 		numDist4.setEditable(false);
 		
-		JButton addStation = new JButton("Add Station");
+		addStation = new JButton("Add Station");
 		addStation.setSize(new Dimension(20, 50));
 		
-		JTextField addStationField = new JTextField(" ", 5);
+		addStationField = new JTextField(" ", 5);
 		addStationField.setEditable(true);
 
 		//adds all the components to the panel in the correct order
@@ -241,7 +259,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		this.setVisible(true);
 		
 		/**==================================================================================================
-		 * The following are action and change listeners for the buttons, slider, and combo box in the window
+		 * The following are action and change listeners for the buttons and combo box in the window
 		=====================================================================================================*/
 		
 		
@@ -262,9 +280,20 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	
+	/**
+	 * Method to update the hammDistInfo text field to the value of the slider
+	 * @param event
+	 */
 	@Override
-	public void stateChanged(ChangeEvent event) {}
+	public void stateChanged(ChangeEvent event) {
+		hammDistInfo.setText(String.valueOf(compDist.getValue())); 
+	}
 	
+	/**
+	 * Main method
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main (String [] args) throws IOException {
 		new HammingDistanceFrame();
 	}
