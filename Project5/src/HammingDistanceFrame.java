@@ -60,22 +60,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	JTextField numDist4;
 	JButton addStation;
 	JTextField addStationField;
-
-	/*
-	 * Method to set up the combo box
-	 */
-	private void comboBoxSetup() {
-		
-		try {
-			ArrayList<String> stations = readInFromFile();
-			for(String stn : stations) {
-				allStations.addItem(stn);
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}	
-	}
+	ArrayList<String> comboBoxStations;
 	
 	/*
 	 * Method that reads in all stations from the file and stores them in an arrayList
@@ -90,6 +75,41 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 			}
 
 			return stations;
+	}
+	
+	/*
+	 * Method to set up the combo box
+	 */
+	private void comboBoxSetup() {
+		
+		try {
+			comboBoxStations = readInFromFile();
+			
+			for(String stn : comboBoxStations) {
+				allStations.addItem(stn);
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	/*
+	 * Method to add a new station to the combo box in the appropriate place
+	 */
+	public void addNewStation(String StID) {
+		//adds the new station to the arraylist
+		comboBoxStations.add(StID);
+		//sorts the arraylist
+		Collections.sort(comboBoxStations);
+		//clears the combo box
+		allStations.removeAllItems();
+		
+		//adds each station, including the new one, back into the combo box
+		for(String stn : comboBoxStations) {
+			allStations.addItem(stn);
+		}
+		
 	}
 
 	/**
@@ -331,28 +351,22 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 			numDist4.setText(String.valueOf(distances[4]));
 			
 		});
+		
 		/*
+		 * Action listener for the addStation button
+		 * Adds the new station to the list in the JComboBox and clears the text field
+		 */
 		addStation.addActionListener((e) ->{
+			//gets the text in the text field
 			String newStation = addStationField.getText();
-			if(newStation.length() == 4) {
-				stationsList.add(addStationField.getText());
-			}
-			Collections.sort(stationsList);
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
-				for(int i = 0; i < stationsList.size(); i++) {
-					bw.write(stationsList.get(i) + "\n");
-				}
-				DefaultComboBoxModel<String> newModel = getComboBoxModel();
-				allStations = new JComboBox<String>(newModel);
-				bw.close();
-
-			}
-			catch (IOException ioE){
-				System.out.println("Error writing to file");
+			//makes sure the new station is the right length and not already in the list
+			if(newStation.length() == 4 && !comboBoxStations.contains(newStation)) {
+				//adds the new station and clears the text box
+				addNewStation(newStation);
+				addStationField.setText("");
 			}
 				
-		});*/
+		});
 		
 	}
 	
