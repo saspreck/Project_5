@@ -348,7 +348,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * Action listener for the addStation button
 		 * Adds the new station to the list in the JComboBox and clears the text field
 		 */
-		addStation.addActionListener((e) ->{
+		addStation.addActionListener((e) -> {
 			//gets the text in the text field
 			String newStation = addStationField.getText();
 			//makes sure the new station is the right length and not already in the list
@@ -359,6 +359,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 			}
 				
 		});
+		
 		
 		/*===========================================================================
 		 * The following are components for the creative side of the project
@@ -383,12 +384,36 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		rightSideConst.gridy = 1;
 		rightSide.add(description2, rightSideConst);
 		
+		/*================================================================
+		 * Panel to hold the selected station label and text field
+		 ================================================================*/
 		
+		JPanel selectedStationPanel = new JPanel(new GridLayout(1, 2));
+		rightSideConst = new GridBagConstraints();
+		rightSideConst.gridx = 0;
+		rightSideConst.gridy = 2;
+		rightSideConst.insets = new Insets(10, 10, 10, 10);
 		
+		JLabel selStation = new JLabel("Selected Station:");
+		selectedStationPanel.add(selStation);
+		
+		JTextField selStationField = new JTextField((String) allStations.getSelectedItem());
+		selStationField.setEditable(false);
+		selectedStationPanel.add(selStationField);
+		
+		rightSide.add(selectedStationPanel, rightSideConst);
 		this.add(rightSide);
 		
 		//makes everything visible
 		this.setVisible(true);
+		
+		/*
+		 * Action listener for the combo box, sets the value of the text field to the selected item in the combo box
+		 */
+		allStations.addActionListener((e) -> {
+			
+			selStationField.setText((String) allStations.getSelectedItem()); 
+		});
 	}
 	
 	@Override
