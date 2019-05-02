@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+
 /**
  * Class to create a GUI for calculating Hamming Distance
  * @author skylersprecker
@@ -63,9 +64,11 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	 * Method that reads in all stations from the file and stores them in an arrayList
 	 */
 	private ArrayList<String> readInFromFile() throws IOException, FileNotFoundException {
-			ArrayList<String> stations = new ArrayList<String>();
-			BufferedReader bf = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
 		
+			ArrayList<String> stations = new ArrayList<String>();
+			
+			BufferedReader bf = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/" + "Project5" + "/" + "Mesonet.txt"));
+			//reads in each line from the file and adds it to the arraylist
 			while (bf.ready())
 			{	
 				stations.add(bf.readLine());
@@ -80,8 +83,10 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 	private void comboBoxSetup() {
 		
 		try {
+			//gets an arraylist with all the stations from the file
 			comboBoxStations = readInFromFile();
 			
+			//adds each station to the combo box
 			for(String stn : comboBoxStations) {
 				allStations.addItem(stn);
 			}
@@ -394,13 +399,16 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		rightSideConst.gridy = 2;
 		rightSideConst.insets = new Insets(10, 10, 10, 10);
 		
+		//label for the selected station
 		JLabel selStation = new JLabel("Selected Station:");
 		selectedStationPanel.add(selStation);
 		
+		//text field showing the selected station
 		JTextField selStationField = new JTextField((String) allStations.getSelectedItem());
 		selStationField.setEditable(false);
 		selectedStationPanel.add(selStationField);
 		
+		//adds panel to larger panel
 		rightSide.add(selectedStationPanel, rightSideConst);
 		
 		/*================================================================
@@ -413,13 +421,16 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		rightSideConst.gridy = 3;
 		rightSideConst.insets = new Insets(10, 10, 10, 10);
 		
+		//label for the scrambled station
 		JLabel backwardsStation = new JLabel("Scrambled Station:");
 		backwardsAlphabetPanel.add(backwardsStation);
 		
+		//field to display the scrambled station
 		JTextField backwardsField = new JTextField("");
 		backwardsField.setEditable(false);
 		backwardsAlphabetPanel.add(backwardsField);
 		rightSide.add(backwardsAlphabetPanel, rightSideConst);
+		
 		
 		/*
 		 * Following are not on a subpanel of the rightSide panel
@@ -450,8 +461,10 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		 * Following are action listeners for the combo box 
 		 * and scramble and addToList buttons
 		 ===============================================================*/
+		
 		/*
 		 * Action listener for the combo box, sets the value of the text field to the selected item in the combo box
+		 * updates the text field to reflect the value of the combo box
 		 */
 		allStations.addActionListener((e) -> {
 			selStationField.setText((String) allStations.getSelectedItem()); 
@@ -459,6 +472,7 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		
 		/*
 		 * Action listener for the scramble button 
+		 * scrambles the selected station
 		 */
 		scramble.addActionListener((e) -> {
 			String chosenStation = selStationField.getText();
@@ -478,6 +492,9 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		});
 	}
 	
+	/*
+	 * Methods that are required to be implemented but have no purpose in this program
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 	

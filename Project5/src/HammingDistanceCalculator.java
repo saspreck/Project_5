@@ -108,8 +108,13 @@ public class HammingDistanceCalculator {
 		return equalDistanceStations;
 	}
 	
+	/**
+	 * Method to create a new station from the given one using a backwards alphabet
+	 * @param station The given station
+	 */
 	public String backwardsAlphabetize(String station) {
 		
+		//puts all the letters and the letters in the opposite position into a hash map
 		HashMap<String, String> letters = new HashMap<String, String>();
 		letters.put("A", "Z");
 		letters.put("B", "Y");
@@ -137,14 +142,25 @@ public class HammingDistanceCalculator {
 		letters.put("X", "C");
 		letters.put("Y", "B");
 		letters.put("Z", "A");
+		letters.put("0", "9");
+		letters.put("1", "8");
+		letters.put("2", "7");
+		letters.put("3", "6");
+		letters.put("4", "5");
+		letters.put("5", "4");
+		letters.put("6", "3");
+		letters.put("7", "2");
+		letters.put("8", "1");
+		letters.put("9", "1");
 		
+		//iterates through the given string and adds the opposite letter to a new string
 		String scrambledString = "";
 		for(int i = 0; i < station.length(); i++) {
 			if(letters.containsKey(String.valueOf(station.charAt(i)))) {
 				scrambledString += letters.get(String.valueOf(station.charAt(i)));
 			}
 		}
-
+		//returns the new strong
 		return scrambledString;
 	}
 	
