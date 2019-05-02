@@ -3,8 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.GridLayout;
@@ -73,7 +71,7 @@ public class HammingDistanceFrame extends JFrame implements ChangeListener {
 			{	
 				stations.add(bf.readLine());
 			}
-
+;
 			return stations;
 	}
 	
