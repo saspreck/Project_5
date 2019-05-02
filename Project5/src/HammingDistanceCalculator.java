@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 /**
  * Class to calculate appropriate hamming distances
  * @author skylersprecker
@@ -105,6 +106,46 @@ public class HammingDistanceCalculator {
 		}
 		bf.close();
 		return equalDistanceStations;
+	}
+	
+	public String backwardsAlphabetize(String station) {
+		
+		HashMap<String, String> letters = new HashMap<String, String>();
+		letters.put("A", "Z");
+		letters.put("B", "Y");
+		letters.put("C", "X");
+		letters.put("D", "W");
+		letters.put("E", "V");
+		letters.put("F", "U");
+		letters.put("G", "T");
+		letters.put("H", "S");
+		letters.put("I", "R");
+		letters.put("J", "Q");
+		letters.put("K", "P");
+		letters.put("L", "O");
+		letters.put("M", "N");
+		letters.put("N", "M");
+		letters.put("O", "L");
+		letters.put("P", "K");
+		letters.put("Q", "J");
+		letters.put("R", "I");
+		letters.put("S", "H");
+		letters.put("T", "G");
+		letters.put("U", "F");
+		letters.put("V", "E");
+		letters.put("W", "D");
+		letters.put("X", "C");
+		letters.put("Y", "B");
+		letters.put("Z", "A");
+		
+		String scrambledString = "";
+		for(int i = 0; i < station.length(); i++) {
+			if(letters.containsKey(String.valueOf(station.charAt(i)))) {
+				scrambledString += letters.get(String.valueOf(station.charAt(i)));
+			}
+		}
+
+		return scrambledString;
 	}
 	
 }

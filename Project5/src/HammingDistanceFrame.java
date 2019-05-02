@@ -402,17 +402,79 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		selectedStationPanel.add(selStationField);
 		
 		rightSide.add(selectedStationPanel, rightSideConst);
+		
+		/*================================================================
+		 * Panel to hold backwards alphabet label and text field
+		 ================================================================*/
+		
+		JPanel backwardsAlphabetPanel = new JPanel(new GridLayout(1, 2));
+		rightSideConst = new GridBagConstraints();
+		rightSideConst.gridx = 0;
+		rightSideConst.gridy = 3;
+		rightSideConst.insets = new Insets(10, 10, 10, 10);
+		
+		JLabel backwardsStation = new JLabel("Scrambled Station:");
+		backwardsAlphabetPanel.add(backwardsStation);
+		
+		JTextField backwardsField = new JTextField("");
+		backwardsField.setEditable(false);
+		backwardsAlphabetPanel.add(backwardsField);
+		rightSide.add(backwardsAlphabetPanel, rightSideConst);
+		
+		/*
+		 * Following are not on a subpanel of the rightSide panel
+		 */
+		
+		//button to backwards alphabetize the station
+		JButton scramble = new JButton("Backwards Alphabetize");
+		rightSideConst = new GridBagConstraints();
+		rightSideConst.gridx = 0;
+		rightSideConst.gridy = 4;
+		rightSide.add(scramble, rightSideConst);
+		
+		
+		//button to add the new station to the list
+		JButton addToList = new JButton("Add to list");
+		rightSideConst = new GridBagConstraints();
+		rightSideConst.gridx = 0;
+		rightSideConst.gridy = 5;
+		rightSide.add(addToList, rightSideConst);
+		
+		//adds the panel to the frame
 		this.add(rightSide);
 		
 		//makes everything visible
 		this.setVisible(true);
 		
+		/*===============================================================
+		 * Following are action listeners for the combo box 
+		 * and scramble and addToList buttons
+		 ===============================================================*/
 		/*
 		 * Action listener for the combo box, sets the value of the text field to the selected item in the combo box
 		 */
 		allStations.addActionListener((e) -> {
-			
 			selStationField.setText((String) allStations.getSelectedItem()); 
+		});
+		
+		/*
+		 * Action listener for the scramble button 
+		 */
+		scramble.addActionListener((e) -> {
+			String chosenStation = selStationField.getText();
+			HammingDistanceCalculator hdc = new HammingDistanceCalculator("", 0);
+			String scrambledStation = hdc.backwardsAlphabetize(chosenStation);
+			backwardsField.setText(scrambledStation);
+		});
+		
+		/*
+		 * Action listener for the addToList button
+		 * adds the scrambled station to the list of stations
+		 */
+		addToList.addActionListener((e) -> {
+			String scrambledStation = backwardsField.getText();
+			addNewStation(scrambledStation);
+			backwardsField.setText("");
 		});
 	}
 	
