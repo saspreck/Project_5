@@ -19,11 +19,8 @@ import java.awt.Insets;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 /**
@@ -109,7 +106,6 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		for(String stn : comboBoxStations) {
 			allStations.addItem(stn);
 		}
-		
 	}
 
 	/**
@@ -291,10 +287,6 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 		
 		//adds panel to frame
 		this.add(leftSide);
-
-		
-		//makes everything visible
-		this.setVisible(true);
 		
 		
 		/**==================================================================================================
@@ -368,6 +360,35 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 				
 		});
 		
+		/*===========================================================================
+		 * The following are components for the creative side of the project
+		 ===========================================================================*/
+		
+		//panel to hold everything on the right side
+		JPanel rightSide = new JPanel(new GridBagLayout());
+		rightSide.setPreferredSize(new Dimension(FRAME_WIDTH - 400, FRAME_HEIGHT));
+		GridBagConstraints rightSideConst = null;
+		
+		//first part of the description
+		JLabel description = new JLabel("This side backwards alphabetizes the selected");
+		rightSideConst = new GridBagConstraints();
+		rightSideConst.gridx = 0;
+		rightSideConst.gridy = 0;
+		rightSide.add(description, rightSideConst);
+		
+		//second part of the description
+		JLabel description2 = new JLabel("station and calculates its hamming distances.");
+		rightSideConst = new GridBagConstraints();
+		rightSideConst.gridx = 0;
+		rightSideConst.gridy = 1;
+		rightSide.add(description2, rightSideConst);
+		
+		
+		
+		this.add(rightSide);
+		
+		//makes everything visible
+		this.setVisible(true);
 	}
 	
 	@Override
