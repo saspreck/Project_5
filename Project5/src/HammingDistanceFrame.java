@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
  * @author skylersprecker
  * @version 2019-04-28
  */
-public class HammingDistanceFrame extends JFrame implements MouseListener, ChangeListener {
+public class HammingDistanceFrame extends JFrame implements ChangeListener {
 	
 	private static final int FRAME_WIDTH = 700;
 	private static final int FRAME_HEIGHT = 700;
@@ -491,24 +491,6 @@ public class HammingDistanceFrame extends JFrame implements MouseListener, Chang
 			backwardsField.setText("");
 		});
 	}
-	
-	/*
-	 * Methods that are required to be implemented but have no purpose in this program
-	 */
-	@Override
-	public void mouseClicked(MouseEvent e) {}
-	
-	@Override
-	public void mousePressed(MouseEvent e) {}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-
-	@Override
-	public void mouseExited(MouseEvent e) {}
 	
 	/**
 	 * Method to update the hammDistInfo text field to the value of the slider
